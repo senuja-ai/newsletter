@@ -252,3 +252,6 @@ footer a { color: var(--muted); }
 .whisper p { color: var(--ink); opacity: 0.85; font-size: 0.95rem; }
 .whisper p + p { margin-top: 8px; }
 .card p + p, .events p + p, #spotlight-content p + p, #feature-content p + p { margin-top: 8px; }
+
+/* Sections hidden by app.js when they have no published posts */
+[hidden] { display: none !important; }

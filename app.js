@@ -1,6 +1,7 @@
 // Loads published posts from Firebase and puts them into the page.
-// If Firebase isn't set up yet, or a section has no published posts,
-// the default content written in index.html stays on the page.
+// If Firebase isn't set up yet (or nothing is published at all), the default
+// content written in index.html stays on the page. Once posts exist, the
+// Writers' Desk controls everything: empty sections are hidden.
 
 import { firebaseConfig } from './firebase-config.js';
 
@@ -29,13 +30,29 @@ async function loadPosts() {
   // Newest first everywhere, except events (soonest first).
   for (const key in bySection) bySection[key].sort((a, b) => millis(b.createdAt) - millis(a.createdAt));
 
-  if (bySection.feature) renderFeature(bySection.feature[0]);
-  if (bySection.news) renderCards('news-list', bySection.news);
-  if (bySection.events) renderEvents(bySection.events);
-  if (bySection.spotlight) renderSpotlight(bySection.spotlight[0]);
-  if (bySection.corner) renderCards('corner-list', bySection.corner);
-  if (bySection.quote) renderQuote(bySection.quote[0]);
-  if (bySection.gossip) renderGossip(bySection.gossip);
+  // Nothing published at all yet → writers haven't started; keep the default page.
+  if (snap.empty) return;
+
+  // From here on the Writers' Desk is in charge: sections with nothing
+  // published are hidden instead of showing the old default text.
+  if (bySection.feature) renderFeature(bySection.feature[0]); else hide('.feature');
+  if (bySection.news) renderCards('news-list', bySection.news); else hide('#news', 'news');
+  if (!(bySection.events && renderEvents(bySection.events))) hide('#events', 'events');
+  if (bySection.spotlight) renderSpotlight(bySection.spotlight[0]); else hide('#spotlight', 'spotlight');
+  if (bySection.corner) renderCards('corner-list', bySection.corner); else hide('#corner-list');
+  if (bySection.quote) renderQuote(bySection.quote[0]); else hide('#quote-content');
+  if (!bySection.corner && !bySection.quote) hide('#corner', 'corner');
+  if (bySection.gossip) renderGossip(bySection.gossip); else hide('#gossip', 'gossip');
+}
+
+// Hides a part of the page (and its menu link, if given).
+function hide(selector, navId) {
+  const node = document.querySelector(selector);
+  if (node) node.hidden = true;
+  if (navId) {
+    const link = document.querySelector(`nav a[href="#${navId}"]`);
+    if (link) link.hidden = true;
+  }
 }
 
 /* ---------- helpers ---------- */
@@ -85,7 +102,7 @@ function renderEvents(posts) {
   const upcoming = posts
     .filter(p => !p.date || p.date >= today)          // hide events that have passed
     .sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
-  if (!upcoming.length) return;
+  if (!upcoming.length) return false; // all events have passed → section gets hidden
 
   fill('events-list', upcoming.map(p => {
     const li = el('li');
@@ -101,6 +118,7 @@ function renderEvents(posts) {
     li.append(box, text);
     return li;
   }));
+  return true;
 }
 
 function renderSpotlight(p) {
