@@ -1,35 +1,26 @@
 # Nørre News
 
-A simple static school newsletter website (HTML + CSS, no build step).
+The public newsletter site for Nørre Gymnasium (HTML + CSS + a little JavaScript).
+
+## How the content works
+- The text written in `index.html` is the **default** content.
+- Writers publish posts from the separate Writers' Desk site
+  (`newsletter-admin` folder). Published posts are stored in Firebase and
+  `app.js` puts them into the page when someone visits.
+- A section with no published posts keeps its default text, so the site
+  never looks empty.
+- Until `firebase-config.js` is filled in, the site simply shows the default text.
 
 ## Files
-- `index.html` – the newsletter content
-- `style.css` – the design
-- `.nojekyll` – tells GitHub Pages to serve the files as-is
+- `index.html`: page layout + default content
+- `style.css`: design
+- `app.js`: loads published posts from Firebase
+- `firebase-config.js`: your Firebase settings (same as in newsletter-admin)
+- `.nojekyll`: tells GitHub Pages to serve the files as-is
 
-## Editing
-Open `index.html` in any text editor and change the text inside the sections
-(News, Events, Spotlight, Student Corner, Contact). Replace
-`your-email@example.com` with a real contact address.
-
-## Preview locally
-Double-click `index.html`, or from this folder run:
-
-    python -m http.server 8000
-
-and open http://localhost:8000
-
-## Publishing on GitHub Pages
-See the instructions you were given, or in short:
-
-    git init
+## Updating the site code
     git add .
-    git commit -m "First issue of Nørre News"
-    git branch -M main
-    git remote add origin https://github.com/<your-username>/2inewsletter.git
-    git push -u origin main
+    git commit -m "What you changed"
+    git push
 
-Then on GitHub: Settings → Pages → Source: "Deploy from a branch" →
-Branch: `main`, folder `/ (root)` → Save.
-
-The site appears at `https://<your-username>.github.io/2inewsletter/`.
+GitHub Pages redeploys automatically after each push.

@@ -216,3 +216,39 @@ footer a { color: var(--muted); }
 /* ---------- Links ---------- */
 .tagline a { color: var(--accent); text-decoration: none; font-weight: 500; }
 .tagline a:hover { text-decoration: underline; }
+
+/* ---------- Gossip column ---------- */
+.gossip-intro { color: var(--muted); margin: -8px 0 24px; font-style: italic; }
+.gossip-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.whisper {
+  position: relative;
+  background: var(--accent-soft);
+  border: 2px dashed var(--accent);
+  border-radius: 10px;
+  padding: 26px 22px 22px;
+  transform: rotate(-0.6deg);
+  transition: transform 0.15s;
+}
+.whisper:nth-child(even) { transform: rotate(0.6deg); }
+.whisper:hover { transform: rotate(0deg) scale(1.01); }
+.whisper::before {
+  content: "psst…";
+  position: absolute;
+  top: -12px; left: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.whisper h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.whisper p { color: var(--ink); opacity: 0.85; font-size: 0.95rem; }
+.whisper p + p { margin-top: 8px; }
+.card p + p, .events p + p, #spotlight-content p + p, #feature-content p + p { margin-top: 8px; }

@@ -12,11 +12,17 @@
 </head>
 <body>
 
+  <!--
+    The text below is the DEFAULT content. Once Firebase is set up
+    (see firebase-config.js), anything the writers publish from the
+    writer site replaces the default content of that section.
+  -->
+
   <header class="masthead">
     <div class="masthead-top">
-      <span>Issue No. 1</span>
+      <span>Nørre Gymnasium</span>
       <span id="today"></span>
-      <span>Autumn 2026</span>
+      <span>Student Newsletter</span>
     </div>
     <h1>Nørre News</h1>
     <p class="tagline">News, events &amp; stories from <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
@@ -25,6 +31,7 @@
       <a href="#events">Events</a>
       <a href="#spotlight">Spotlight</a>
       <a href="#corner">Student Corner</a>
+      <a href="#gossip">Gossip</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -34,15 +41,17 @@
     <!-- FEATURE STORY -->
     <section class="feature">
       <div class="feature-label">Top Story</div>
-      <h2>Welcome to our very first issue!</h2>
-      <p class="lede">This newsletter is written by students, for students. Every issue we'll share what's happening around school, upcoming events and celebrations, and the people who make Nørre what it is.</p>
-      <p>Have an idea for a story, a photo you'd like to share, or a shout-out for a fellow student? Get in touch using the contact section at the bottom of the page. Contributions from everyone are welcome.</p>
+      <div id="feature-content">
+        <h2>Welcome to our very first issue!</h2>
+        <p class="lede">This newsletter is written by students, for students. Every issue we'll share what's happening around school, upcoming events and celebrations, and the people who make Nørre what it is.</p>
+        <p>Have an idea for a story, a photo you'd like to share, or a shout-out for a fellow student? Get in touch using the contact section at the bottom of the page. Contributions from everyone are welcome.</p>
+      </div>
     </section>
 
     <!-- NEWS -->
     <section id="news">
       <h2 class="section-title">School News</h2>
-      <div class="grid">
+      <div class="grid" id="news-list">
         <article class="card">
           <span class="tag">Halloween</span>
           <h3>Halloween parties this weekend</h3>
@@ -59,7 +68,7 @@
     <!-- EVENTS -->
     <section id="events">
       <h2 class="section-title">Upcoming Events</h2>
-      <ul class="events">
+      <ul class="events" id="events-list">
         <li>
           <div class="date"><span class="day">31</span><span class="month">Oct</span></div>
           <div>
@@ -82,7 +91,7 @@
       <h2 class="section-title">Student Spotlight</h2>
       <div class="spotlight-body">
         <div class="avatar" aria-hidden="true">★</div>
-        <div>
+        <div id="spotlight-content">
           <h3>Your name could be here</h3>
           <p>Each issue we feature a student: their projects, interests, or something they're proud of. Nominate someone (or yourself!) for the next issue.</p>
         </div>
@@ -92,7 +101,7 @@
     <!-- STUDENT CORNER -->
     <section id="corner">
       <h2 class="section-title">Student Corner</h2>
-      <div class="grid two">
+      <div class="grid two" id="corner-list">
         <article class="card">
           <span class="tag">Wednesdays</span>
           <h3>Volleyball Club</h3>
@@ -104,9 +113,29 @@
           <p>Badminton on Mondays is a more informal session. Just drop by, grab a racket and play for fun. No experience or commitment needed.</p>
         </article>
       </div>
-      <div class="quote">
+      <div class="quote" id="quote-content">
         <p>"Every great newsletter needs an egoistic dude who happens to work with computers."</p>
         <span>Senuja</span>
+      </div>
+    </section>
+
+    <!-- GOSSIP -->
+    <section id="gossip" class="gossip">
+      <h2 class="section-title">The Gossip Column</h2>
+      <p class="gossip-intro">Heard it in the corridor? Whispered in the canteen? Here's what's going around Nørre this week.</p>
+      <div class="gossip-list" id="gossip-list">
+        <article class="whisper">
+          <h3>The great canteen mystery</h3>
+          <p>Someone keeps leaving perfectly folded paper cranes on the canteen tables every Friday. Nobody knows who. Theories welcome.</p>
+        </article>
+        <article class="whisper">
+          <h3>Overheard in the corridor</h3>
+          <p>"I'm not procrastinating, I'm letting my ideas marinate." Honestly? Relatable.</p>
+        </article>
+        <article class="whisper">
+          <h3>Costume rumours</h3>
+          <p>Word is that at least one teacher is planning a Halloween costume this year. We'll be watching.</p>
+        </article>
       </div>
     </section>
 
@@ -130,5 +159,6 @@
       now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     document.getElementById('year').textContent = now.getFullYear();
   </script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
