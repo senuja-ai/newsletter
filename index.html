@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nørre News</title>
+  <meta name="description" content="News, events and stories from Nørre Gymnasium.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <div class="masthead-top">
+      <span>Issue No. 1</span>
+      <span id="today"></span>
+      <span>Autumn 2026</span>
+    </div>
+    <h1>Nørre News</h1>
+    <p class="tagline">News, events &amp; stories from <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
+    <nav>
+      <a href="#news">News</a>
+      <a href="#events">Events</a>
+      <a href="#spotlight">Spotlight</a>
+      <a href="#corner">Student Corner</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- FEATURE STORY -->
+    <section class="feature">
+      <div class="feature-label">Top Story</div>
+      <h2>Welcome to our very first issue!</h2>
+      <p class="lede">This newsletter is written by students, for students. Every issue we'll share what's happening around school, upcoming events and celebrations, and the people who make Nørre what it is.</p>
+      <p>Have an idea for a story, a photo you'd like to share, or a shout-out for a fellow student? Get in touch using the contact section at the bottom of the page. Contributions from everyone are welcome.</p>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news">
+      <h2 class="section-title">School News</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Halloween</span>
+          <h3>Halloween parties this weekend</h3>
+          <p>Halloween is almost here, and there's more than one party to choose from. Dig out your costume, check with the organisers for times and places, and get ready for a spooky weekend.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Out &amp; About</span>
+          <h3>Plans for light art in Copenhagen</h3>
+          <p>As the evenings get darker, Copenhagen lights up with art installations around the city. We're planning a group trip to see them. Let us know if you'd like to join!</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="events">
+      <h2 class="section-title">Upcoming Events</h2>
+      <ul class="events">
+        <li>
+          <div class="date"><span class="day">31</span><span class="month">Oct</span></div>
+          <div>
+            <h3>Halloween</h3>
+            <p>Costumes, parties and plenty of sweets. Share your best costume photos with the newsletter team!</p>
+          </div>
+        </li>
+        <li>
+          <div class="date"><span class="day">TBC</span><span class="month">Dec</span></div>
+          <div>
+            <h3>Christmas Celebrations</h3>
+            <p>Festive fun before the winter break. Details to follow in the next issue.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- SPOTLIGHT -->
+    <section id="spotlight" class="spotlight">
+      <h2 class="section-title">Student Spotlight</h2>
+      <div class="spotlight-body">
+        <div class="avatar" aria-hidden="true">★</div>
+        <div>
+          <h3>Your name could be here</h3>
+          <p>Each issue we feature a student: their projects, interests, or something they're proud of. Nominate someone (or yourself!) for the next issue.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDENT CORNER -->
+    <section id="corner">
+      <h2 class="section-title">Student Corner</h2>
+      <div class="grid two">
+        <article class="card">
+          <span class="tag">Wednesdays</span>
+          <h3>Volleyball Club</h3>
+          <p>The volleyball club meets every Wednesday and is looking for new members! Whether you're experienced or have never served a ball, come along and give it a try.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Mondays</span>
+          <h3>Badminton Club</h3>
+          <p>Badminton on Mondays is a more informal session. Just drop by, grab a racket and play for fun. No experience or commitment needed.</p>
+        </article>
+      </div>
+      <div class="quote">
+        <p>"Every great newsletter needs an egoistic dude who happens to work with computers."</p>
+        <span>Senuja</span>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <h2 class="section-title">Get Involved</h2>
+      <p>Want to write, take photos, or suggest a story? Talk to the newsletter team at school or send us a message.</p>
+      <a class="button" href="mailto:your-email@example.com?subject=N%C3%B8rre%20News">Email the team</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Nørre News · Made by students of <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
+    <a href="#" class="back-top">Back to top ↑</a>
+  </footer>
+
+  <script>
+    const now = new Date();
+    document.getElementById('today').textContent =
+      now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('year').textContent = now.getFullYear();
+  </script>
+</body>
+</html>
