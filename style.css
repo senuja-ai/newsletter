@@ -255,3 +255,19 @@ footer a { color: var(--muted); }
 
 /* Sections hidden by app.js when they have no published posts */
 [hidden] { display: none !important; }
+
+/* ---------- Long articles: preview + Read more ---------- */
+.card.long .card-body { max-height: 9.5em; overflow: hidden; position: relative; }
+.card.long .card-body::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3em;
+  background: linear-gradient(transparent, var(--card));
+}
+.card.long.expanded .card-body { max-height: none; }
+.card.long.expanded .card-body::after { display: none; }
+.card.long.expanded { grid-column: 1 / -1; }
+.read-more {
+  margin-top: 10px; background: none; border: none; padding: 0; cursor: pointer;
+  font: inherit; font-weight: 600; font-size: 0.9rem; color: var(--accent);
+}
+.read-more:hover { text-decoration: underline; }
+.card:has(.read-more):hover { transform: none; }

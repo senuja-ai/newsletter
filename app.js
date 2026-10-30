@@ -89,11 +89,30 @@ function renderFeature(p) {
   fill('feature-content', [el('h2', '', p.title), ...paragraphs(p.body, 'lede')]);
 }
 
+const PREVIEW_WORDS = 80; // longer articles get a "Read more" button
+
 function renderCards(id, posts) {
   fill(id, posts.map(p => {
     const card = el('article', 'card');
     if (p.tag) card.append(el('span', 'tag', p.tag));
-    card.append(el('h3', '', p.title), ...paragraphs(p.body));
+    card.append(el('h3', '', p.title));
+    const body = el('div', 'card-body');
+    body.append(...paragraphs(p.body));
+    card.append(body);
+    const words = (String(p.body || '').match(/\S+/g) || []).length;
+    if (words > PREVIEW_WORDS) {
+      card.classList.add('long');
+      const btn = el('button', 'read-more', 'Read more');
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', () => {
+        const open = card.classList.toggle('expanded');
+        btn.textContent = open ? 'Show less' : 'Read more';
+        btn.setAttribute('aria-expanded', String(open));
+        if (!open) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+      card.append(btn);
+    }
     return card;
   }));
 }
