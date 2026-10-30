@@ -3,7 +3,8 @@
 // content written in index.html stays on the page. Once posts exist, the
 // Writers' Desk controls everything: empty sections are hidden.
 
-import { firebaseConfig, databaseId } from './firebase-config.js';
+// Loaded with a fresh ?v= each time so browsers never use an old cached copy.
+const { firebaseConfig, databaseId } = await import(`./firebase-config.js?v=${Date.now()}`);
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
