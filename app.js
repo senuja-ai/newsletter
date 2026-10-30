@@ -3,7 +3,7 @@
 // content written in index.html stays on the page. Once posts exist, the
 // Writers' Desk controls everything: empty sections are hidden.
 
-import { firebaseConfig } from './firebase-config.js';
+import { firebaseConfig, databaseId } from './firebase-config.js';
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -18,7 +18,7 @@ async function loadPosts() {
   const { initializeApp } = await import(`${SDK}/firebase-app.js`);
   const { getFirestore, collection, query, where, getDocs } = await import(`${SDK}/firebase-firestore.js`);
 
-  const db = getFirestore(initializeApp(firebaseConfig));
+  const db = getFirestore(initializeApp(firebaseConfig), databaseId || '(default)');
   const snap = await getDocs(query(collection(db, 'posts'), where('published', '==', true)));
 
   const bySection = {};
