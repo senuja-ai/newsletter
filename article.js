@@ -29,7 +29,9 @@ async function main() {
   }
   if (!snap.exists() || !snap.data().published) return showStatus('This article is not available.', true);
 
-  renderArticle({ id: snap.id, ...snap.data() });
+  const article = { id: snap.id, ...snap.data() };
+  const images = /\]\(img:/.test(article.body || '') ? await loadImages() : {};
+  renderArticle(article, images);
   setUpComments();
   await loadComments();
 }
@@ -47,7 +49,20 @@ function showStatus(text, withLink) {
 
 /* ---------- Article ---------- */
 
-function renderArticle(a) {
+// Pictures uploaded on the Writers' Desk are stored with the article.
+async function loadImages() {
+  try {
+    const snap = await fs.getDocs(fs.collection(fs.db, 'articles', articleId, 'images'));
+    const map = {};
+    snap.forEach(d => { map[d.id] = d.data().data; });
+    return map;
+  } catch (err) {
+    console.warn('Images could not be loaded', err);
+    return {};
+  }
+}
+
+function renderArticle(a, images = {}) {
   document.title = a.title + ' · Nørre News';
   $('post-title').textContent = a.title;
   $('post-subtitle').textContent = a.subtitle || '';
@@ -65,7 +80,7 @@ function renderArticle(a) {
     img.addEventListener('error', () => { img.hidden = true; });
   }
 
-  $('post-body').replaceChildren(...richText(a.body));
+  $('post-body').replaceChildren(...richText(a.body, images));
 
   $('share-btn').addEventListener('click', async () => {
     const url = location.href;

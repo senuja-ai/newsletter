@@ -6,6 +6,8 @@
 //   **bold**            *italic*
 //   [link text](https://example.com)
 //   ---  (a line on its own draws a divider)
+//   ![Caption](img:ID)            an image uploaded on the Writers' Desk
+//   ![Caption](https://…/pic.png) an image from another website
 // Everything is built with DOM nodes and textContent, so nobody can inject HTML.
 
 export const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
@@ -79,12 +81,20 @@ export function inline(text) {
 }
 
 // Turns an article body into headings, paragraphs, quotes, lists and dividers.
-export function richText(body) {
+// `images` maps uploaded image IDs to their picture data (see article.js).
+export function richText(body, images = {}) {
   const nodes = [];
   let list = null;
   for (const raw of String(body || '').split('\n')) {
     const line = raw.trim();
     if (!line) { list = null; continue; }
+    const pic = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+    if (pic) {
+      list = null;
+      const fig = imageFigure(pic[2], pic[1], images);
+      if (fig) nodes.push(fig);
+      continue;
+    }
     if (/^[-*] /.test(line)) {
       if (!list) { list = el('ul'); nodes.push(list); }
       const li = el('li'); li.append(...inline(line.slice(2))); list.append(li);
@@ -102,9 +112,34 @@ export function richText(body) {
   return nodes;
 }
 
+// A picture with an optional caption. Uploaded images ("img:ID") come from the
+// article's own image store; others must be normal https links.
+function imageFigure(src, caption, images) {
+  let url = '';
+  if (src.startsWith('img:')) {
+    const data = images[src.slice(4)];
+    if (typeof data === 'string' && /^data:image\/(png|jpeg|webp|gif);base64,/.test(data)) url = data;
+  } else {
+    url = safeUrl(src);
+  }
+  if (!url) return null;
+  const fig = el('figure', 'post-figure');
+  const img = el('img');
+  img.src = url;
+  img.alt = caption || '';
+  img.loading = 'lazy';
+  img.addEventListener('error', () => fig.remove());
+  // Tap/click to open the full-size picture
+  img.addEventListener('click', () => fig.classList.toggle('zoomed'));
+  fig.append(img);
+  if (caption) fig.append(el('figcaption', '', caption));
+  return fig;
+}
+
 // Plain-text preview (formatting codes removed) for cards.
 export function plainPreview(body, words = 40) {
-  const text = String(body || '')
+  const text = String(body || '').slice(0, 6000) // long articles: only the start is needed
+    .replace(/^!\[[^\]]*\]\([^)]*\)$/gm, '')
     .replace(/^#+ |^> |^[-*] /gm, '')
     .replace(/\*\*([^*]+)\*\*|\*([^*]+)\*/g, '$1$2')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
