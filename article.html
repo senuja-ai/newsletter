@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article · Nørre News</title>
+  <meta name="description" content="An article from Nørre News, the student newsletter of Nørre Gymnasium.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Always load the newest CSS (GitHub Pages lets browsers cache files for 10 minutes) -->
+  <script>document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');</script>
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
+</head>
+<body>
+
+  <header class="mini-masthead">
+    <a href="./" class="mini-brand">Nørre News</a>
+    <nav>
+      <a href="./">Home</a>
+      <a href="./#articles">All articles</a>
+    </nav>
+  </header>
+
+  <main class="post">
+    <p class="post-status" id="post-status">Loading article…</p>
+
+    <article id="post" hidden>
+      <header class="post-head">
+        <h1 id="post-title"></h1>
+        <p class="post-subtitle" id="post-subtitle"></p>
+        <div class="byline">
+          <span class="avatar-sm" id="post-avatar" aria-hidden="true"></span>
+          <div>
+            <div class="byline-name" id="post-author"></div>
+            <div class="byline-meta" id="post-meta"></div>
+          </div>
+          <button type="button" class="share-btn" id="share-btn">Share</button>
+        </div>
+      </header>
+      <img class="post-cover" id="post-cover" alt="" hidden>
+      <div class="post-body" id="post-body"></div>
+    </article>
+
+    <!-- COMMENTS -->
+    <section class="discussion" id="discussion" hidden>
+      <h2 id="comment-count">Discussion</h2>
+
+      <form class="comment-form" id="comment-form">
+        <label>Your name
+          <input type="text" id="c-name" maxlength="50" autocomplete="nickname" required>
+        </label>
+        <label>Your comment
+          <textarea id="c-text" rows="4" maxlength="2000" required placeholder="What do you think?"></textarea>
+        </label>
+        <div class="comment-actions">
+          <small class="muted">Be kind. Editors can remove comments.</small>
+          <button type="submit" class="button" id="c-submit">Post comment</button>
+        </div>
+        <div class="upload" id="upload" hidden>
+          <div class="upload-row"><span id="upload-text">Uploading your comment…</span><span id="upload-secs">30s</span></div>
+          <div class="upload-bar"><div class="upload-fill" id="upload-fill"></div></div>
+          <small class="muted">Please keep this page open until it's posted.</small>
+        </div>
+        <p class="error" id="c-error" role="alert"></p>
+      </form>
+
+      <ol class="comments" id="comments"></ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Nørre News · Made by students of <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
+    <a href="./">← Back to the newsletter</a>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <!-- Always load the newest code -->
+  <script type="module">import('./article.js?v=' + Date.now());</script>
+</body>
+</html>

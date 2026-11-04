@@ -13,6 +13,23 @@ const isConfigured = firebaseConfig && firebaseConfig.apiKey && !firebaseConfig.
 
 if (isConfigured) {
   loadPosts().catch(err => console.warn('Nørre News: could not load posts, showing default content.', err));
+  loadArticles().catch(err => console.warn('Nørre News: could not load articles.', err));
+}
+
+// A summary card for every published article, newest first. Each card leads to the full article page.
+async function loadArticles() {
+  const list = document.getElementById('articles-list');
+  try {
+    const { publishedArticles, articleCard, el } = await import(`./format.js?v=${Date.now()}`);
+    const articles = await publishedArticles();
+    list.replaceChildren(...(articles.length
+      ? articles.map(articleCard)
+      : [el('p', 'post-status', 'No articles yet. Check back soon!')]));
+  } catch (err) {
+    list.replaceChildren();
+    list.append(Object.assign(document.createElement('p'), { className: 'post-status', textContent: 'Articles could not be loaded right now.' }));
+    throw err;
+  }
 }
 
 async function loadPosts() {
