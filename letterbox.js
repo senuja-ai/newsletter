@@ -239,8 +239,8 @@ async function send() {
     try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
     $('lb-form').hidden = true;
     $('lb-done-text').textContent = t === 'article'
-      ? 'Thanks for your article! The editors will read it and may get it ready to publish.'
-      : 'Thanks for your report. The editors will read it soon.';
+      ? 'Thanks for your article! The chief editor will read it and may get it ready to publish.'
+      : 'Thanks for your report. The chief editor will read it soon.';
     $('lb-done-wait').textContent = `You can send another message in ${COOLDOWN_MINUTES} minutes.`;
     $('lb-done').hidden = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });

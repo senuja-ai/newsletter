@@ -1,7 +1,3 @@
-// Loads published posts from Firebase and puts them into the page.
-// If Firebase isn't set up yet (or nothing is published at all), the default
-// content written in index.html stays on the page. Once posts exist, the
-// Writers' Desk controls everything: empty sections are hidden.
 
 // Loaded with a fresh ?v= each time so browsers never use an old cached copy.
 const { firebaseConfig, databaseId } = await import(`./firebase-config.js?v=${Date.now()}`);
@@ -58,7 +54,7 @@ async function loadPosts() {
   if (!(bySection.events && renderEvents(bySection.events))) hide('#events', 'events');
   if (bySection.spotlight) renderSpotlight(bySection.spotlight[0]); else hide('#spotlight', 'spotlight');
   if (bySection.corner) renderCards('corner-list', bySection.corner); else hide('#corner-list');
-  if (bySection.quote) renderQuote(bySection.quote[0]); else hide('#quote-content');
+  if (bySection.quote) renderQuotes(bySection.quote); else hide('#quote-content');
   if (!bySection.corner && !bySection.quote) hide('#corner', 'corner');
   if (bySection.gossip) renderGossip(bySection.gossip); else hide('#gossip', 'gossip');
 }
@@ -162,10 +158,14 @@ function renderSpotlight(p) {
   fill('spotlight-content', [el('h3', '', p.title), ...paragraphs(p.body)]);
 }
 
-function renderQuote(p) {
-  const nodes = [el('p', '', `"${String(p.body || '').trim().replace(/^"|"$/g, '')}"`)];
-  if (p.tag) nodes.push(el('span', '', p.tag));
-  fill('quote-content', nodes);
+// Every published quote, newest first.
+function renderQuotes(posts) {
+  fill('quote-content', posts.map(p => {
+    const item = el('div', 'quote-item');
+    item.append(el('p', '', `"${String(p.body || '').trim().replace(/^"|"$/g, '')}"`));
+    if (p.tag) item.append(el('span', '', p.tag));
+    return item;
+  }));
 }
 
 function renderGossip(posts) {

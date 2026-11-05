@@ -518,3 +518,6 @@ main.post section, .post-head { border-bottom: none; }
 .lb-done h2 { font-size: 2rem; margin: 8px 0; }
 .lb-done p { margin-top: 8px; }
 .lb-done a { color: var(--accent); font-weight: 600; }
+
+/* ---------- Several quotes ---------- */
+.quote-item + .quote-item { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
