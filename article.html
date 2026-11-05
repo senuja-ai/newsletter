@@ -48,20 +48,21 @@
 
       <form class="comment-form" id="comment-form">
         <label>Your name
-          <input type="text" id="c-name" maxlength="50" autocomplete="nickname" required>
+          <input type="text" id="c-name" name="name" maxlength="50" autocomplete="nickname" required>
         </label>
         <label>Your comment
-          <textarea id="c-text" rows="4" maxlength="2000" required placeholder="What do you think?"></textarea>
+          <textarea id="c-text" name="text" rows="4" maxlength="2000" required placeholder="What do you think?"></textarea>
         </label>
         <div class="comment-actions">
           <small class="muted">Be kind. Editors can remove comments.</small>
           <button type="submit" class="button" id="c-submit">Post comment</button>
         </div>
         <div class="upload" id="upload" hidden>
-          <div class="upload-row"><span id="upload-text">Uploading your comment…</span><span id="upload-secs">30s</span></div>
+          <div class="upload-row"><span class="upload-text" id="upload-text">Uploading your comment…</span><span class="upload-secs" id="upload-secs">15s</span></div>
           <div class="upload-bar"><div class="upload-fill" id="upload-fill"></div></div>
           <small class="muted">Please keep this page open until it's posted.</small>
         </div>
+        <p class="penalty" id="c-penalty" hidden></p>
         <p class="error" id="c-error" role="alert"></p>
       </form>
 

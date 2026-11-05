@@ -415,8 +415,6 @@ main.post section, .post-head { border-bottom: none; }
 .comment-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .comment-head .avatar-sm { width: 30px; height: 30px; font-size: 0.85rem; }
 .comment-time { color: var(--muted); font-size: 0.8rem; }
-.comment p { margin-left: 40px; }
-.comment p + p { margin-top: 6px; }
 .comment.new { animation: flash 2.5s ease-out; }
 @keyframes flash { from { background: var(--accent-soft); } to { background: transparent; } }
 
@@ -440,3 +438,83 @@ main.post section, .post-head { border-bottom: none; }
 }
 .post-figure.zoomed img { max-height: 85vh; max-width: 100%; width: auto; background: none; cursor: zoom-out; }
 .post-figure.zoomed figcaption { color: #eee; }
+
+/* ---------- Comment replies, folding, spam notice ---------- */
+.comment-text p { margin-left: 40px; }
+.comment-text p + p { margin-top: 6px; }
+.comment.long:not(.open) > .comment-text { max-height: 7.5em; overflow: hidden; position: relative; }
+.comment.long:not(.open) > .comment-text::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.5em;
+  background: linear-gradient(transparent, var(--paper));
+}
+.comment-actions-row { display: flex; gap: 16px; margin: 6px 0 0 40px; }
+.link-btn {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font: inherit; font-size: 0.85rem; font-weight: 600; color: var(--accent);
+}
+.link-btn:hover { text-decoration: underline; }
+.link-btn:disabled { opacity: 0.5; cursor: default; }
+.reply-to { color: var(--muted); font-size: 0.8rem; }
+.replies { list-style: none; margin: 12px 0 0 40px; padding-left: 16px; border-left: 2px solid var(--line); display: grid; gap: 12px; }
+.replies .comment { border-bottom: none; padding-bottom: 0; }
+.reply-form { margin: 10px 0 4px 40px; padding: 14px; }
+.reply-form .reply-name { font-weight: 600; color: var(--accent); }
+.penalty {
+  margin-top: 10px; padding: 8px 12px; border-radius: 6px;
+  background: #fef2f2; color: #b91c1c; font-size: 0.9rem; font-weight: 600;
+}
+@media (max-width: 600px) {
+  .replies { margin-left: 8px; }
+  .reply-form, .comment-actions-row { margin-left: 0; }
+}
+
+/* ---------- Letterbox link (Get Involved) ---------- */
+.letterbox-link {
+  display: flex; align-items: center; gap: 16px; text-align: left;
+  max-width: 560px; margin: 28px auto 0; padding: 16px 20px;
+  background: var(--card); border: 2px solid var(--ink); border-radius: 10px;
+  color: var(--ink); text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.letterbox-link:hover { transform: translateY(-2px); box-shadow: 4px 4px 0 var(--accent); }
+.letterbox-icon { width: 56px; height: 56px; flex-shrink: 0; color: var(--ink); }
+.letterbox-link strong { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 1.25rem; }
+.letterbox-link span span { color: var(--muted); font-size: 0.92rem; }
+.letterbox-arrow { margin-left: auto; font-size: 1.4rem; color: var(--accent); }
+
+/* ---------- Letterbox page ---------- */
+.letterbox form { padding-bottom: 48px; }
+.letterbox label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 14px; }
+.letterbox label small { font-weight: 400; color: var(--muted); }
+.letterbox input[type=text], .letterbox textarea {
+  display: block; width: 100%; margin-top: 6px; padding: 10px 12px;
+  font: inherit; font-weight: 400; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--card); color: var(--ink);
+}
+.letterbox textarea { resize: vertical; min-height: 260px; line-height: 1.6; }
+.letterbox input:focus, .letterbox textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.lb-choice { border: none; display: grid; gap: 10px; margin-bottom: 18px; }
+.lb-choice legend { font-weight: 600; margin-bottom: 10px; }
+.lb-option {
+  display: flex !important; gap: 12px; align-items: flex-start; cursor: pointer;
+  padding: 14px 16px; margin: 0 !important; border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+  font-weight: 400 !important; color: var(--muted);
+}
+.lb-option strong { display: block; color: var(--ink); font-size: 1rem; }
+.lb-option input { margin-top: 4px; accent-color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; }
+.lb-option:has(input:checked) { border: 2px solid var(--accent); background: var(--accent-soft); padding: 13px 15px; }
+.lb-safety { background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 14px; border-radius: 4px; font-size: 0.9rem; margin-bottom: 18px; }
+.lb-count { display: block; text-align: right; font-size: 0.8rem; font-weight: 500; color: var(--muted); margin-top: 4px; }
+.lb-count.over { color: #b91c1c; font-weight: 600; }
+.lb-images { margin: -4px 0 16px; }
+.lb-image-buttons { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.lb-img-status { font-size: 0.85rem; color: var(--accent); font-weight: 600; min-height: 1em; margin-top: 4px; }
+.lb-thumbs { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.lb-thumbs li { width: 110px; display: grid; gap: 4px; justify-items: center; }
+.lb-thumbs img { width: 110px; height: 76px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+.lb-privacy { font-size: 0.85rem; margin-bottom: 14px; }
+.lb-done { text-align: center; padding: 48px 0; border-bottom: none; }
+.lb-done-icon { font-size: 3rem; color: var(--accent); }
+.lb-done h2 { font-size: 2rem; margin: 8px 0; }
+.lb-done p { margin-top: 8px; }
+.lb-done a { color: var(--accent); font-weight: 600; }

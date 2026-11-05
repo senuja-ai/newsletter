@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Letterbox · Nørre News</title>
+  <meta name="description" content="Send Nørre News an anonymous report, or submit your own article.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>document.write('<link rel="stylesheet" href="style.css?v=' + Date.now() + '">');</script>
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
+</head>
+<body>
+
+  <header class="mini-masthead">
+    <a href="./" class="mini-brand">Nørre News</a>
+    <nav>
+      <a href="./">Home</a>
+      <a href="./#articles">Articles</a>
+    </nav>
+  </header>
+
+  <main class="post letterbox">
+    <header class="post-head">
+      <h1>The Letterbox</h1>
+      <p class="post-subtitle">Tell us what's going on, or send us something you've written. Only the newsletter editors can read what you send.</p>
+    </header>
+
+    <form id="lb-form" novalidate>
+      <fieldset class="lb-choice">
+        <legend>What would you like to send?</legend>
+        <label class="lb-option">
+          <input type="radio" name="type" value="report" checked>
+          <span><strong>An anonymous report</strong> Something happening at school we should know about. No name needed.</span>
+        </label>
+        <label class="lb-option">
+          <input type="radio" name="type" value="article">
+          <span><strong>An article for Nørre News</strong> Something you've written. The editors read every submission and may publish it.</span>
+        </label>
+      </fieldset>
+
+      <p class="lb-safety" id="lb-safety">
+        <strong>Need help now?</strong> If someone is in danger or you need support, please also talk to a teacher or a counsellor you trust. In an emergency call <strong>112</strong>.
+      </p>
+
+      <label id="lb-title-wrap"><span id="lb-title-label">Subject <small>(optional)</small></span>
+        <input type="text" id="lb-title" maxlength="200">
+      </label>
+      <label id="lb-name-wrap" hidden>Your name or pen name <small>(optional: leave empty to stay anonymous)</small>
+        <input type="text" id="lb-name" maxlength="80" autocomplete="off">
+      </label>
+      <label><span id="lb-body-label">Your message</span>
+        <textarea id="lb-body" rows="12" maxlength="450000" placeholder="Write here…"></textarea>
+        <span class="lb-count" id="lb-count"></span>
+      </label>
+
+      <div class="lb-images">
+        <div class="lb-image-buttons">
+          <button type="button" class="link-btn" id="lb-add-image">+ Add images</button>
+          <small class="muted">or paste / drag pictures into the text box (up to 10).</small>
+          <input type="file" id="lb-file" accept="image/*" multiple hidden>
+        </div>
+        <p class="lb-img-status" id="lb-img-status" role="status"></p>
+        <ul class="lb-thumbs" id="lb-thumbs"></ul>
+      </div>
+
+      <p class="lb-privacy muted">We don't ask for your name, email or account. Your text is saved as you type on this device only, so you won't lose it if you close the page.</p>
+
+      <div class="comment-actions">
+        <span></span>
+        <button type="submit" class="button" id="lb-send">Send to the Letterbox</button>
+      </div>
+      <p class="penalty" id="lb-wait" hidden></p>
+      <p class="error" id="lb-error" role="alert"></p>
+    </form>
+
+    <section class="lb-done" id="lb-done" hidden>
+      <div class="lb-done-icon" aria-hidden="true">✉</div>
+      <h2>Delivered!</h2>
+      <p id="lb-done-text">Thanks. The editors will read it soon.</p>
+      <p class="muted" id="lb-done-wait"></p>
+      <p><a href="./">← Back to the newsletter</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Nørre News · Made by students of <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
+    <a href="./">← Back to the newsletter</a>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script type="module">import('./letterbox.js?v=' + Date.now());</script>
+</body>
+</html>
