@@ -14,11 +14,8 @@
 </head>
 <body>
 
-  <!--
-    The text below is the DEFAULT content. Once Firebase is set up
-    (see firebase-config.js), anything the writers publish from the
-    writer site replaces the default content of that section.
-  -->
+  <!-- All sections are filled in from the Writers' Desk (see app.js).
+       Sections with nothing published stay hidden. -->
 
   <header class="masthead">
     <div class="masthead-top">
@@ -30,29 +27,24 @@
     <p class="tagline">News, events &amp; stories from <a href="https://norreg.dk/" target="_blank" rel="noopener">Nørre Gymnasium</a></p>
     <nav>
       <a href="#articles">Articles</a>
-      <a href="#news">News</a>
-      <a href="#events">Events</a>
-      <a href="#spotlight">Spotlight</a>
-      <a href="#corner">Student Corner</a>
-      <a href="#gossip">Gossip</a>
+      <a href="#news" hidden>News</a>
+      <a href="#events" hidden>Events</a>
+      <a href="#spotlight" hidden>Spotlight</a>
+      <a href="#corner" hidden>Student Corner</a>
+      <a href="#gossip" hidden>Gossip</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
 
-    <!-- FEATURE STORY -->
-    <section class="feature">
+    <!-- TOP STORY -->
+    <section class="feature" hidden>
       <div class="feature-label">Top Story</div>
-      <div id="feature-content">
-        <h2>Welcome to our very first issue!</h2>
-        <p class="lede">This newsletter is written by students, for students. Every issue we'll share what's happening around school, upcoming events and celebrations, and the people who make Nørre what it is.</p>
-        <p>Have an idea for a story, a photo you'd like to share, or a shout-out for a fellow student? Get in touch using the contact section at the bottom of the page. Contributions from everyone are welcome.</p>
-      </div>
+      <div id="feature-content"></div>
     </section>
 
-    <!-- ARTICLES: a summary of every published article from the Writers' Desk.
-         Each summary links to the article's full page (article.html). -->
+    <!-- ARTICLES: a summary card for every published article, linking to article.html -->
     <section id="articles">
       <h2 class="section-title">Articles</h2>
       <div class="article-list" id="articles-list">
@@ -61,94 +53,38 @@
     </section>
 
     <!-- NEWS -->
-    <section id="news">
+    <section id="news" hidden>
       <h2 class="section-title">School News</h2>
-      <div class="grid" id="news-list">
-        <article class="card">
-          <span class="tag">Halloween</span>
-          <h3>Halloween parties this weekend</h3>
-          <p>Halloween is almost here, and there's more than one party to choose from. Dig out your costume, check with the organisers for times and places, and get ready for a spooky weekend.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Out &amp; About</span>
-          <h3>Plans for light art in Copenhagen</h3>
-          <p>As the evenings get darker, Copenhagen lights up with art installations around the city. We're planning a group trip to see them. Let us know if you'd like to join!</p>
-        </article>
-      </div>
+      <div class="grid" id="news-list"></div>
     </section>
 
     <!-- EVENTS -->
-    <section id="events">
+    <section id="events" hidden>
       <h2 class="section-title">Upcoming Events</h2>
-      <ul class="events" id="events-list">
-        <li>
-          <div class="date"><span class="day">31</span><span class="month">Oct</span></div>
-          <div>
-            <h3>Halloween</h3>
-            <p>Costumes, parties and plenty of sweets. Share your best costume photos with the newsletter team!</p>
-          </div>
-        </li>
-        <li>
-          <div class="date"><span class="day">TBC</span><span class="month">Dec</span></div>
-          <div>
-            <h3>Christmas Celebrations</h3>
-            <p>Festive fun before the winter break. Details to follow in the next issue.</p>
-          </div>
-        </li>
-      </ul>
+      <ul class="events" id="events-list"></ul>
     </section>
 
     <!-- SPOTLIGHT -->
-    <section id="spotlight" class="spotlight">
+    <section id="spotlight" class="spotlight" hidden>
       <h2 class="section-title">Student Spotlight</h2>
       <div class="spotlight-body">
         <div class="avatar" aria-hidden="true">★</div>
-        <div id="spotlight-content">
-          <h3>Your name could be here</h3>
-          <p>Each issue we feature a student: their projects, interests, or something they're proud of. Nominate someone (or yourself!) for the next issue.</p>
-        </div>
+        <div id="spotlight-content"></div>
       </div>
     </section>
 
-    <!-- STUDENT CORNER -->
-    <section id="corner">
+    <!-- STUDENT CORNER (clubs + quotes) -->
+    <section id="corner" hidden>
       <h2 class="section-title">Student Corner</h2>
-      <div class="grid two" id="corner-list">
-        <article class="card">
-          <span class="tag">Wednesdays</span>
-          <h3>Volleyball Club</h3>
-          <p>The volleyball club meets every Wednesday and is looking for new members! Whether you're experienced or have never served a ball, come along and give it a try.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Mondays</span>
-          <h3>Badminton Club</h3>
-          <p>Badminton on Mondays is a more informal session. Just drop by, grab a racket and play for fun. No experience or commitment needed.</p>
-        </article>
-      </div>
-      <div class="quote" id="quote-content">
-        <p>"Every great newsletter needs an egoistic dude who happens to work with computers."</p>
-        <span>Senuja</span>
-      </div>
+      <div class="grid two" id="corner-list" hidden></div>
+      <div class="quote" id="quote-content" hidden></div>
     </section>
 
     <!-- GOSSIP -->
-    <section id="gossip" class="gossip">
+    <section id="gossip" class="gossip" hidden>
       <h2 class="section-title">The Gossip Column</h2>
       <p class="gossip-intro">Heard it in the corridor? Whispered in the canteen? Here's what's going around Nørre this week.</p>
-      <div class="gossip-list" id="gossip-list">
-        <article class="whisper">
-          <h3>The great canteen mystery</h3>
-          <p>Someone keeps leaving perfectly folded paper cranes on the canteen tables every Friday. Nobody knows who. Theories welcome.</p>
-        </article>
-        <article class="whisper">
-          <h3>Overheard in the corridor</h3>
-          <p>"I'm not procrastinating, I'm letting my ideas marinate." Honestly? Relatable.</p>
-        </article>
-        <article class="whisper">
-          <h3>Costume rumours</h3>
-          <p>Word is that at least one teacher is planning a Halloween costume this year. We'll be watching.</p>
-        </article>
-      </div>
+      <div class="gossip-list" id="gossip-list"></div>
     </section>
 
     <!-- CONTACT -->

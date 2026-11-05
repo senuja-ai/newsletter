@@ -8,7 +8,7 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const isConfigured = firebaseConfig && firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('PASTE');
 
 if (isConfigured) {
-  loadPosts().catch(err => console.warn('Nørre News: could not load posts, showing default content.', err));
+  loadPosts().catch(err => console.warn('Nørre News: could not load posts.', err));
   loadArticles().catch(err => console.warn('Nørre News: could not load articles.', err));
 }
 
@@ -44,28 +44,25 @@ async function loadPosts() {
   // Newest first everywhere, except events (soonest first).
   for (const key in bySection) bySection[key].sort((a, b) => millis(b.createdAt) - millis(a.createdAt));
 
-  // Nothing published at all yet → writers haven't started; keep the default page.
-  if (snap.empty) return;
-
-  // From here on the Writers' Desk is in charge: sections with nothing
-  // published are hidden instead of showing the old default text.
-  if (bySection.feature) renderFeature(bySection.feature[0]); else hide('.feature');
-  if (bySection.news) renderCards('news-list', bySection.news); else hide('#news', 'news');
-  if (!(bySection.events && renderEvents(bySection.events))) hide('#events', 'events');
-  if (bySection.spotlight) renderSpotlight(bySection.spotlight[0]); else hide('#spotlight', 'spotlight');
-  if (bySection.corner) renderCards('corner-list', bySection.corner); else hide('#corner-list');
-  if (bySection.quote) renderQuotes(bySection.quote); else hide('#quote-content');
-  if (!bySection.corner && !bySection.quote) hide('#corner', 'corner');
-  if (bySection.gossip) renderGossip(bySection.gossip); else hide('#gossip', 'gossip');
+  // All content comes from the Writers' Desk. Sections start hidden in
+  // index.html and only appear when they have something published.
+  if (bySection.feature) { renderFeature(bySection.feature[0]); show('.feature'); }
+  if (bySection.news) { renderCards('news-list', bySection.news); show('#news', 'news'); }
+  if (bySection.events && renderEvents(bySection.events)) show('#events', 'events');
+  if (bySection.spotlight) { renderSpotlight(bySection.spotlight[0]); show('#spotlight', 'spotlight'); }
+  if (bySection.corner) { renderCards('corner-list', bySection.corner); show('#corner-list'); }
+  if (bySection.quote) { renderQuotes(bySection.quote); show('#quote-content'); }
+  if (bySection.corner || bySection.quote) show('#corner', 'corner');
+  if (bySection.gossip) { renderGossip(bySection.gossip); show('#gossip', 'gossip'); }
 }
 
-// Hides a part of the page (and its menu link, if given).
-function hide(selector, navId) {
+// Shows a part of the page (and its menu link, if given).
+function show(selector, navId) {
   const node = document.querySelector(selector);
-  if (node) node.hidden = true;
+  if (node) node.hidden = false;
   if (navId) {
     const link = document.querySelector(`nav a[href="#${navId}"]`);
-    if (link) link.hidden = true;
+    if (link) link.hidden = false;
   }
 }
 
